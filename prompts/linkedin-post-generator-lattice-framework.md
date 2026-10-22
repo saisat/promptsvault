@@ -10,7 +10,7 @@ tags:
   - lattice-framework
   - interactive-prompt
 status: verified
-visibility: public
+visibility: private
 models-tested: []
 source: own
 variables: []

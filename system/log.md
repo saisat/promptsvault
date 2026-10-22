@@ -127,3 +127,6 @@ Rewrote with the asd-ste100 and structured profiles. Sentence-level edits only: 
 
 ## [2026-10-22] change | the page shows public prompts only, without version history
 (1) `build.py` no longer puts `## version-history` on the page: it shows only the latest version, and the page is about a third smaller. (2) New note property `visibility` (`public` | `private`). The page shows only `public` prompts; a note without it, or with another value, is treated as private and left off. Links to non-public prompts are scrubbed from public prompts' page data so hidden names cannot leak. All 15 existing prompts were set to `visibility: public` (user's choice) and new prompts default to public. `visibility` controls the page only: private notes stay readable in the Git repository. Also updated: `schema.md`, `prompt-ingest`, `prompt-lint` (`missing-visibility`, `bad-visibility`, `private-in-repo`), the Base (visibility column, "Not public" view), README, and `CLAUDE.md`.
+
+## [2026-10-22] visibility | two prompts set to private
+The user set `visibility: private` on `create-fictionalized-caselet` and `linkedin-post-generator-lattice-framework`. They are now left off the web page (13 public prompts); the notes stay in the repository. Obsidian also re-saved the caselet's frontmatter without quotes.

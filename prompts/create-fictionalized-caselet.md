@@ -1,8 +1,8 @@
 ---
 type: prompt
-title: "Create fictionalized caselet"
+title: Create fictionalized caselet
 aliases:
-  - "Create fictionalized caselet"
+  - Create fictionalized caselet
 category: product-management
 tags:
   - case-study
@@ -10,13 +10,13 @@ tags:
   - meta-prompt
   - interactive-prompt
 status: verified
-visibility: public
+visibility: private
 models-tested: []
 source: own
 variables:
-  - "<industry>"
-  - "<product>"
-  - "<product-dilemma>"
+  - <industry>
+  - <product>
+  - <product-dilemma>
 use-case: Create an iterative meta-prompted fictional story about a product manager’s strategic dilemma in a specified industry and product.
 related:
   - "[[ai-powered-discovery-analysis-synthesis-system-prompt]]"
