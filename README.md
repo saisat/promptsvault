@@ -77,7 +77,7 @@ The full definition is in [`system/schema.md`](system/schema.md). The allowed ca
 
 ## The generated outputs
 
-- **`system/prompt-library.html`**: the one-page reader. Open it with `open system/prompt-library.html`. It works offline and has search (press `/`), filters by category, status and tag, a copy button on every prompt, fill-in boxes for placeholders, wikilinks between prompts, dark mode, and a phone layout. It is regenerated each build, so never edit it by hand.
+- **`system/prompt-library.html`**: the one-page reader, also published at **https://saisat.github.io/promptsvault/**. Locally, open it with `open system/prompt-library.html`. It works offline and has search (press `/`), filters by category, status and tag, a copy button on every prompt, fill-in boxes for placeholders, wikilinks between prompts, dark mode, and a phone layout. It is regenerated each build, so never edit it by hand.
 - **`system/library.base`**: an Obsidian Base with four live views: All prompts, By category, Needs retest, and Recently updated. It updates by itself.
 - **`system/chains.canvas`**: an Obsidian canvas of prompts that follow each other (`next` links). Rebuilds only add to it, so layout changes you make by hand are kept.
 - **`system/index.md`** and **`system/log.md`**: a catalog of every prompt by category, and an append-only record of what the skills did.
@@ -115,6 +115,7 @@ The vault is a Git repository, published on GitHub as `promptsvault`.
   ```
   then run `/prompt-build`. Install the Obsidian skills as described under Setup.
 - **Committing:** a good rhythm is one commit after each ingest, rewrite or lint fix, for example `git add -A && git commit -m "Ingest: <prompt name>"`. Git cannot see `raw/` or `curated/`, so `git add -A` is safe.
+- **The live page.** [`.github/workflows/pages.yml`](.github/workflows/pages.yml) builds the reader from `prompts/` and publishes it with GitHub Pages at https://saisat.github.io/promptsvault/. It runs on every push to `main` that changes `prompts/`, `system/taxonomy.md`, or the `prompt-build` skill, so the live page always matches the library, even if your local copy of the page is out of date. To redeploy by hand, open the repository's Actions tab, choose "Publish the prompt library page", and click Run workflow. In Settings → Pages the source must stay set to "GitHub Actions". Only the page is published as a website. The notes themselves are still readable in the repository.
 - **Before publishing anything new**, check `source` links for tracking parameters (`utm_…`, `rcm=…`). Share links copied from phones often carry an identifier. `prompt-lint` does not check this yet.
 - The vault lives in iCloud Drive and the `.git` folder is inside it. If iCloud ever reports conflicted copies inside `.git`, move the repository's Git data out of iCloud with `git init --separate-git-dir <path>`.
 

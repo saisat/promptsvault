@@ -1,0 +1,56 @@
+name: Publish the prompt library page
+
+# Builds the one-page reader from prompts/ and publishes it with GitHub Pages.
+# The page is rebuilt here, so the live site always matches prompts/ and never depends on
+# system/prompt-library.html having been regenerated locally.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "prompts/**"
+      - "system/taxonomy.md"
+      - ".claude/skills/prompt-build/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.x"
+
+      - name: Build the page from prompts/
+        run: |
+          python3 -I .claude/skills/prompt-build/build.py
+          mkdir _site
+          cp system/prompt-library.html _site/index.html
+          touch _site/.nojekyll
+
+      - name: Check the page contains prompts
+        run: grep -q '"slug"' _site/index.html
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v5
