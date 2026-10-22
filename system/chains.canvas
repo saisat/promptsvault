@@ -1,0 +1,9 @@
+{
+	"nodes":[
+		{"id":"19228930f613d868","type":"file","file":"prompts/ai-powered-discovery-analysis-synthesis-system-prompt.md","x":0,"y":0,"width":400,"height":300},
+		{"id":"73698f26c565935c","type":"file","file":"prompts/ai-powered-discovery-analysis-synthesis-user-prompt.md","x":500,"y":0,"width":400,"height":300}
+	],
+	"edges":[
+		{"id":"eba4d258b2e5a438","fromNode":"19228930f613d868","fromSide":"right","toNode":"73698f26c565935c","toSide":"left","toEnd":"arrow","label":"next"}
+	]
+}

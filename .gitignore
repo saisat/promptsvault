@@ -1,0 +1,17 @@
+# Personal captures and untested prompts. Never version-controlled.
+/raw/
+/curated/
+
+# Obsidian local state (window layout and caches change constantly)
+/.obsidian/workspace.json
+/.obsidian/workspaces.json
+/.obsidian/cache
+/.obsidian/plugins/*/data.json
+
+# Claude Code local permissions (per machine)
+/.claude/settings.local.json
+
+# macOS and Python noise
+.DS_Store
+__pycache__/
+*.pyc

@@ -1,0 +1,59 @@
+filters:
+  and:
+    - file.inFolder("prompts")
+    - type == "prompt"
+properties:
+  category:
+    displayName: Category
+  status:
+    displayName: Status
+  tags:
+    displayName: Tags
+  models-tested:
+    displayName: Models tested
+  use-case:
+    displayName: Use case
+  updated:
+    displayName: Updated
+  version:
+    displayName: Version
+views:
+  - type: table
+    name: All prompts
+    order:
+      - file.name
+      - category
+      - status
+      - tags
+      - models-tested
+      - version
+      - updated
+    sort: []
+  - type: table
+    name: By category
+    groupBy:
+      property: category
+      direction: ASC
+    order:
+      - file.name
+      - status
+      - use-case
+  - type: table
+    name: Needs retest
+    filters: status == "needs-retest"
+    order:
+      - file.name
+      - category
+      - version
+      - updated
+  - type: table
+    name: Recently updated
+    order:
+      - file.name
+      - category
+      - status
+      - updated
+    sort:
+      - property: updated
+        direction: DESC
+    limit: 10
