@@ -9,6 +9,7 @@ tags:
   - costars-framework
   - prompt-generator
 status: verified
+visibility: public
 models-tested: []
 source: own
 variables:

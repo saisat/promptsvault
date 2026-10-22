@@ -10,6 +10,7 @@ tags:
   - meta-prompt
   - interactive-prompt
 status: verified
+visibility: public
 models-tested: []
 source: own
 variables:

@@ -54,6 +54,7 @@ aliases: [Be my ruthless mentor]
 category: thinking-partner      # one value from system/taxonomy.md
 tags: [critique, anti-sycophancy, persona]
 status: verified                # verified | needs-retest | retired
+visibility: public              # public | private; only public prompts appear on the web page
 models-tested: []
 source: own                     # a URL, an author, or "own"
 variables: []                   # placeholders you fill in, e.g. ["<industry>"]
@@ -73,12 +74,14 @@ version: 2
 
 The full definition is in [`system/schema.md`](system/schema.md). The allowed categories are in [`system/taxonomy.md`](system/taxonomy.md). Edit that file to add a category, and the skills will accept it.
 
+**Visibility.** `public` prompts appear on the web page. `private` prompts, and notes with no `visibility`, do not. New prompts default to `public`. This controls the **page only**: a private prompt is still readable in the Git repository and its history if the repository is public.
+
 **Status values.** `verified` means you tested it and it works. `needs-retest` means the text changed since the last test (a rewrite sets this). `retired` means don't use it. After you retest, set the status yourself, or ask Claude to.
 
 ## The generated outputs
 
-- **`system/prompt-library.html`**: the one-page reader, also published at **https://saisat.github.io/promptsvault/**. Locally, open it with `open system/prompt-library.html`. It works offline and has search (press `/`), filters by category, status and tag, a copy button on every prompt, fill-in boxes for placeholders, wikilinks between prompts, dark mode, and a phone layout. It is regenerated each build, so never edit it by hand.
-- **`system/library.base`**: an Obsidian Base with four live views: All prompts, By category, Needs retest, and Recently updated. It updates by itself.
+- **`system/prompt-library.html`**: the one-page reader, also published at **https://saisat.github.io/promptsvault/**. Locally, open it with `open system/prompt-library.html`. It shows only `public` prompts and only their latest version (no version history). It works offline and has search (press `/`), filters by category, status and tag, a copy button on every prompt, fill-in boxes for placeholders, wikilinks between prompts, dark mode, and a phone layout. It is regenerated each build, so never edit it by hand.
+- **`system/library.base`**: an Obsidian Base with five live views: All prompts, By category, Needs retest, Not public, and Recently updated. It updates by itself.
 - **`system/chains.canvas`**: an Obsidian canvas of prompts that follow each other (`next` links). Rebuilds only add to it, so layout changes you make by hand are kept.
 - **`system/index.md`** and **`system/log.md`**: a catalog of every prompt by category, and an append-only record of what the skills did.
 
@@ -107,15 +110,15 @@ Needed:
 
 The vault is a Git repository, published on GitHub as `promptsvault`.
 
-- **Not in Git:** `raw/` and `curated/` are listed in [`.gitignore`](.gitignore). Your captures and untested prompts stay on your machine only. Also ignored: Obsidian's window layout (`.obsidian/workspace.json`), `.claude/settings.local.json`, and OS and Python noise.
-- **In Git:** the library (`prompts/`), the generated outputs and shared rules (`system/`), the skills and their tests (`.claude/skills/`), the Obsidian settings, `CLAUDE.md`, and this file.
+- **Not in Git:** `raw/` and `curated/` are listed in [`.gitignore`](.gitignore). Your captures and untested prompts stay on your machine only. Also ignored: Obsidian's own settings folder (`.obsidian/`), `.claude/settings.local.json`, and OS and Python noise.
+- **In Git:** the library (`prompts/`), the generated outputs and shared rules (`system/`), the skills and their tests (`.claude/skills/`), `CLAUDE.md`, and this file.
 - **After cloning on a new machine:** create the two ignored folders and rebuild the page.
   ```
   mkdir raw curated
   ```
-  then run `/prompt-build`. Install the Obsidian skills as described under Setup.
+  then open the folder as a vault in Obsidian, which creates its own `.obsidian/` settings, and run `/prompt-build`. Install the Obsidian skills as described under Setup.
 - **Committing:** a good rhythm is one commit after each ingest, rewrite or lint fix, for example `git add -A && git commit -m "Ingest: <prompt name>"`. Git cannot see `raw/` or `curated/`, so `git add -A` is safe.
-- **The live page.** [`.github/workflows/pages.yml`](.github/workflows/pages.yml) builds the reader from `prompts/` and publishes it with GitHub Pages at https://saisat.github.io/promptsvault/. It runs on every push to `main` that changes `prompts/`, `system/taxonomy.md`, or the `prompt-build` skill, so the live page always matches the library, even if your local copy of the page is out of date. To redeploy by hand, open the repository's Actions tab, choose "Publish the prompt library page", and click Run workflow. In Settings → Pages the source must stay set to "GitHub Actions". Only the page is published as a website. The notes themselves are still readable in the repository.
+- **The live page.** [`.github/workflows/pages.yml`](.github/workflows/pages.yml) builds the reader from `prompts/` and publishes it with GitHub Pages at https://saisat.github.io/promptsvault/. It runs on every push to `main` that changes `prompts/`, `system/taxonomy.md`, or the `prompt-build` skill, so the live page always matches the library, even if your local copy of the page is out of date. To redeploy by hand, open the repository's Actions tab, choose "Publish the prompt library page", and click Run workflow. In Settings → Pages the source must stay set to "GitHub Actions". Only the page is published as a website, and only `public` prompts are on it. The notes themselves, including `private` ones, are still readable in the repository.
 - **Before publishing anything new**, check `source` links for tracking parameters (`utm_…`, `rcm=…`). Share links copied from phones often carry an identifier. `prompt-lint` does not check this yet.
 - The vault lives in iCloud Drive and the `.git` folder is inside it. If iCloud ever reports conflicted copies inside `.git`, move the repository's Git data out of iCloud with `git init --separate-git-dir <path>`.
 

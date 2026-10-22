@@ -24,7 +24,7 @@ PROMPT_B = "Write a friendly note about gardening. " + " ".join(f"water{i} plant
 
 def fm(**kw):
     base = {"type": "prompt", "title": "T", "aliases": ["T"], "category": "writing", "tags": ["alpha", "beta"],
-            "status": "verified", "models-tested": ["m"], "source": "own", "variables": [], "use-case": "Does a thing.",
+            "status": "verified", "visibility": "public", "models-tested": ["m"], "source": "own", "variables": [], "use-case": "Does a thing.",
             "related": [], "next": [], "created": "2026-10-01", "updated": "2026-10-10", "version": 1}
     base.update(kw)
     return {k: v for k, v in base.items() if v is not None}
@@ -285,6 +285,33 @@ class IndexAndOutputs(LintCase):
         (self.vault / "system" / "log.md").write_text("# Log\n", encoding="utf-8")
         rep = self.run_lint()
         self.assertTrue(any(i["code"] == "log-missing" and i["severity"] == "info" for i in rep.items))
+
+
+class Visibility(LintCase):
+    def test_missing_visibility_is_a_warning(self):
+        self.add("n", render(fm(visibility=None)))
+        self.finish()
+        rep = self.run_lint()
+        self.assertTrue(any(i["code"] == "missing-visibility" and i["severity"] == "warn" for i in rep.items))
+
+    def test_invalid_visibility_is_an_error(self):
+        self.add("n", render(fm(visibility="internal")))
+        self.finish()
+        rep = self.run_lint()
+        self.assertTrue(any(i["code"] == "bad-visibility" and i["severity"] == "error" for i in rep.items))
+
+    def test_private_prompts_get_a_reminder_not_a_warning(self):
+        self.add("n", render(fm(visibility="private")))
+        self.finish()
+        rep = self.run_lint()
+        self.assertTrue(any(i["code"] == "private-in-repo" and i["severity"] == "info" for i in rep.items))
+        self.assertFalse(any(i["code"] in ("missing-visibility", "bad-visibility") for i in rep.items))
+
+    def test_public_and_case_variants_are_fine(self):
+        self.add("a", render(fm(title="A", aliases=["A"], visibility="Public"), PROMPT_A))
+        self.finish()
+        rep = self.run_lint()
+        self.assertFalse(any("visibility" in i["code"] for i in rep.items))
 
 
 if __name__ == "__main__":

@@ -7,6 +7,8 @@ properties:
     displayName: Category
   status:
     displayName: Status
+  visibility:
+    displayName: Visibility
   tags:
     displayName: Tags
   models-tested:
@@ -24,6 +26,7 @@ views:
       - file.name
       - category
       - status
+      - visibility
       - tags
       - models-tested
       - version
@@ -46,6 +49,14 @@ views:
       - category
       - version
       - updated
+  - type: table
+    name: Not public
+    filters: visibility != "public"
+    order:
+      - file.name
+      - category
+      - visibility
+      - status
   - type: table
     name: Recently updated
     order:

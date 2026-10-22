@@ -26,6 +26,7 @@ BUILD = HERE.parent / "prompt-build" / "build.py"
 REQUIRED = ["type", "title", "category", "status", "use-case", "version", "created", "updated"]
 EXPECTED_KEYS = ["aliases", "tags", "models-tested", "source", "variables", "related", "next"]
 STATUSES = {"verified", "needs-retest", "retired"}
+VISIBILITIES = {"public", "private"}
 HEADINGS = {"prompt", "when-to-use", "notes", "examples", "related", "version-history"}
 KEBAB = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -186,6 +187,12 @@ def lint(vault, today, stale_days):
         status = fm.get("status", "")
         if status and status not in STATUSES:
             rep.add("error", "bad-status", s, f"status {status!r} is not one of {', '.join(sorted(STATUSES))}")
+        visibility = str(fm.get("visibility", "")).strip().lower()
+        if not visibility:
+            rep.add("warn", "missing-visibility", s, "no `visibility`, so the web page leaves this prompt out (treated as private)",
+                    "add `visibility: public` or `visibility: private`")
+        elif visibility not in VISIBILITIES:
+            rep.add("error", "bad-visibility", s, f"visibility {fm.get('visibility')!r} is not one of {', '.join(sorted(VISIBILITIES))}")
         if not KEBAB.match(s):
             rep.add("warn", "not-kebab", s, "the filename is not kebab-case", "rename the note (Obsidian updates links)")
         tags = kebab_tags(n, build)
@@ -308,6 +315,10 @@ def lint(vault, today, stale_days):
     no_models = [n["slug"] for n in notes if n["fm"].get("status") == "verified" and not build.as_list(n["fm"].get("models-tested"))]
     if no_models:
         rep.add("info", "no-models-tested", "*", f"{len(no_models)} verified prompt(s) record no `models-tested`: {', '.join(no_models)}")
+    private = [n["slug"] for n in notes if str(n["fm"].get("visibility", "")).strip().lower() == "private"]
+    if private:
+        rep.add("info", "private-in-repo", "*", f"{len(private)} private prompt(s) are left off the web page, but they are still readable in the Git "
+                f"repository if it is public: {', '.join(private)}")
     isolated = [n["slug"] for n in notes if not inbound[n["slug"]] and not n["fm_links"] and not n["body_links"]]
     if isolated:
         rep.add("info", "isolated", "*", f"{len(isolated)} prompt(s) have no links in or out: {', '.join(isolated)}")

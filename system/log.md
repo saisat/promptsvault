@@ -124,3 +124,6 @@ Rewrote with the asd-ste100 and structured profiles. Kept `{{USER_CONTEXT}}`, `{
 
 ## [2026-10-22] rewrite | grill-me.md
 Rewrote with the asd-ste100 and structured profiles. Sentence-level edits only: 182 of 211 lines unchanged; the final-summary headings, key questions, quoted phrases, and labels are unchanged. v1 kept in version-history; status set to needs-retest.
+
+## [2026-10-22] change | the page shows public prompts only, without version history
+(1) `build.py` no longer puts `## version-history` on the page: it shows only the latest version, and the page is about a third smaller. (2) New note property `visibility` (`public` | `private`). The page shows only `public` prompts; a note without it, or with another value, is treated as private and left off. Links to non-public prompts are scrubbed from public prompts' page data so hidden names cannot leak. All 15 existing prompts were set to `visibility: public` (user's choice) and new prompts default to public. `visibility` controls the page only: private notes stay readable in the Git repository. Also updated: `schema.md`, `prompt-ingest`, `prompt-lint` (`missing-visibility`, `bad-visibility`, `private-in-repo`), the Base (visibility column, "Not public" view), README, and `CLAUDE.md`.

@@ -10,6 +10,7 @@ tags:
   - go-to-market
   - jobs-to-be-done
 status: verified
+visibility: public
 models-tested: []
 source: "https://www.linkedin.com/posts/shashank-v-4b7a9536b_rip-mckinsey-you-can-now-use-perplexity-activity-7391718538341744640-PHVt"
 variables: []

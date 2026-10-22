@@ -9,6 +9,7 @@ tags:
   - user-research
   - product-discovery
 status: needs-retest
+visibility: public
 models-tested: []
 source: own
 variables:

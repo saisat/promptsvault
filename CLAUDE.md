@@ -19,6 +19,7 @@ Flow: `raw/` (user tests) → `curated/` (`prompt-ingest`) → `prompts/` → `p
 - Only `prompt-rewrite` may change the text of a prompt in `prompts/`. `prompt-ingest` copies the prompt text from `curated/` exactly and never edits `curated/` files.
 - Nothing is deleted without the user confirming it.
 - `raw/` and `curated/` are git-ignored (see `.gitignore`). Never stage or commit them, never use `git add -f` on them, and never remove them from `.gitignore`. Do not commit or push unless the user asks.
+- Only prompts with `visibility: public` appear on the generated web page. New notes get `visibility: public` by default. `visibility` does not hide a note from the Git repository, so never describe `private` as "not on GitHub".
 - Do not add a category that is not in `system/taxonomy.md`. Propose it to the user instead.
 - The user approves edits manually. Do not batch-apply changes without showing them.
 

@@ -10,6 +10,7 @@ tags:
   - competitor-analysis
   - company-analysis
 status: verified
+visibility: public
 models-tested: []
 source: own
 variables:

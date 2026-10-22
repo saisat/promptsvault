@@ -12,7 +12,10 @@ import sys
 from pathlib import Path
 
 FENCE = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
-SECTION_ORDER = ["when-to-use", "notes", "examples", "related", "version-history"]
+SECTION_ORDER = ["when-to-use", "notes", "examples", "related"]
+HIDDEN_SECTIONS = {"prompt", "version-history"}  # the page shows only the latest version
+VISIBILITIES = {"public", "private"}
+WIKILINK_ANY = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]*)?(?:\|[^\]]*)?\]\]")
 
 
 def split_inline_list(s):
@@ -274,6 +277,32 @@ def build_canvas(vault, prompts, warnings):
         print("chains.canvas: already up to date")
 
 
+def scrub_hidden_links(prompt, hidden_keys):
+    """Remove every reference to a non-public prompt from a public prompt's page data.
+
+    Hidden prompts must not leak through their names, so list items in `## related` that link to
+    one are dropped, other links to one become "a private prompt", and `related`/`next` lose them.
+    """
+    def is_hidden(link):
+        return link.strip().lower() in hidden_keys
+
+    def drop_links(text):
+        return WIKILINK_ANY.sub(lambda m: "a private prompt" if is_hidden(m.group(1)) else m.group(0), text)
+
+    sections = {}
+    for name, text in prompt["sections"].items():
+        if name == "related":
+            text = "\n".join(line for line in text.split("\n")
+                             if not any(is_hidden(m) for m in WIKILINK_ANY.findall(line)))
+        text = drop_links(text)
+        if text.strip():
+            sections[name] = text
+    prompt["sections"] = sections
+    for key in ("related", "next"):
+        prompt[key] = [v for v in prompt[key] if not any(is_hidden(m) for m in WIKILINK_ANY.findall(str(v)))]
+    return prompt
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--vault", default=str(Path(__file__).resolve().parents[3]))
@@ -297,12 +326,17 @@ def main():
             warnings.append(f"{slug}: category '{category}' is not in taxonomy.md")
         ordered = {k: sections[k] for k in SECTION_ORDER if sections.get(k, "").strip()}
         for k, v in sections.items():
-            if k not in ordered and k != "prompt" and v.strip():
+            if k not in ordered and k not in HIDDEN_SECTIONS and v.strip():
                 ordered[k] = v
+        visibility = str(fm.get("visibility", "")).strip().lower()
+        if visibility not in VISIBILITIES:
+            warnings.append(f"{slug}: " + (f"visibility {visibility!r} is not public or private" if visibility else "no `visibility`")
+                            + "; treated as private and left off the page")
         prompts.append({
             "slug": slug,
             "title": fm.get("title") or slug.replace("-", " ").capitalize(),
             "aliases": as_list(fm.get("aliases")),
+            "visibility": visibility,
             "category": category,
             "tags": as_list(fm.get("tags")),
             "status": fm.get("status", "") or "unknown",
@@ -318,12 +352,23 @@ def main():
             "sections": ordered,
         })
 
-    cat_order = [c for c in categories if any(p["category"] == c for p in prompts)]
-    cat_order += sorted({p["category"] for p in prompts} - set(cat_order))
+    # The page shows public prompts only. The canvas below still sees every prompt.
+    public = [p for p in prompts if p["visibility"] == "public"]
+    hidden = [p for p in prompts if p["visibility"] != "public"]
+    public_keys = {str(k).lower() for p in public for k in [p["slug"], p["title"], *p["aliases"]]}
+    hidden_keys = {str(k).lower() for p in hidden for k in [p["slug"], p["title"], *p["aliases"]]} - public_keys
+    page = []
+    for p in public:
+        q = scrub_hidden_links(dict(p, sections=dict(p["sections"])), hidden_keys)
+        q.pop("visibility")
+        page.append(q)
+
+    cat_order = [c for c in categories if any(p["category"] == c for p in page)]
+    cat_order += sorted({p["category"] for p in page} - set(cat_order))
     data = {
         "generated": datetime.date.today().isoformat(),
         "categories": cat_order,
-        "prompts": sorted(prompts, key=lambda p: p["title"].lower()),
+        "prompts": sorted(page, key=lambda p: p["title"].lower()),
     }
     payload = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
     template = (Path(__file__).parent / "template.html").read_text(encoding="utf-8")
@@ -332,7 +377,8 @@ def main():
     out = system / "prompt-library.html"
     out.write_text(template.replace("/*__DATA__*/null", payload), encoding="utf-8")
 
-    print(f"wrote {out} ({len(prompts)} prompts, {len(cat_order)} categories)")
+    print(f"wrote {out} ({len(page)} public prompts, {len(cat_order)} categories"
+          + (f"; {len(hidden)} not public and left off the page" if hidden else "") + ")")
     build_canvas(vault, prompts, warnings)
     for w in warnings:
         print("warning:", w)

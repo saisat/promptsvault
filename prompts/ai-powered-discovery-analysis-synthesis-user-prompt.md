@@ -9,6 +9,7 @@ tags:
   - workshop-design
   - user-prompt
 status: verified
+visibility: public
 models-tested: []
 source: own
 variables:

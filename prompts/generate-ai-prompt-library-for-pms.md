@@ -9,6 +9,7 @@ tags:
   - prompt-engineering
   - pm-frameworks
 status: verified
+visibility: public
 models-tested: []
 source: own
 variables: []

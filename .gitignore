@@ -2,11 +2,8 @@
 /raw/
 /curated/
 
-# Obsidian local state (window layout and caches change constantly)
-/.obsidian/workspace.json
-/.obsidian/workspaces.json
-/.obsidian/cache
-/.obsidian/plugins/*/data.json
+# Obsidian's own settings and state. Personal to each machine, and Obsidian rewrites them constantly.
+/.obsidian/
 
 # Claude Code local permissions (per machine)
 /.claude/settings.local.json

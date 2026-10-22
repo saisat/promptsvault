@@ -10,6 +10,7 @@ tags:
   - strategy-alignment
   - facilitation
 status: verified
+visibility: public
 models-tested: []
 source: own
 variables: []

@@ -10,6 +10,7 @@ tags:
   - decision-making
   - interactive-prompt
 status: needs-retest
+visibility: public
 models-tested: []
 source: own
 variables: []

@@ -26,9 +26,9 @@ Exit status is 1 when there are errors. `--stale-days N` sets the needs-retest l
 ## What the script checks
 | Severity | Codes |
 |---|---|
-| error | `missing-property`, `bad-type`, `bad-category` (not in `system/taxonomy.md`), `bad-status`, `no-frontmatter`, `no-prompt-section`, `prompt-blocks` (not exactly one), `variable-missing` (listed but not in the prompt), `broken-link`, `ambiguous-name`, `canvas-invalid` |
-| warn | `missing-key`, `not-kebab`, `tag-count`, `alias-missing-title`, `use-case-long`, `bad-date`, `date-order`, `bad-version`, `history-missing`, `unlisted-variable` (`{{x}}`), `self-link`, `next-cycle`, `retired-referenced`, `stale-retest`, `duplicate-text`, `near-duplicate`, `tag-collision`, `index-missing`, `index-extra`, `index-stale`, `output-missing`, `output-stale`, `canvas-missing-file` |
-| info | `nonstandard-heading`, `link-mismatch`, `no-models-tested`, `isolated`, `empty-category`, `log-missing` |
+| error | `missing-property`, `bad-type`, `bad-category` (not in `system/taxonomy.md`), `bad-status`, `no-frontmatter`, `no-prompt-section`, `prompt-blocks` (not exactly one), `bad-visibility` (not `public` or `private`), `variable-missing` (listed but not in the prompt), `broken-link`, `ambiguous-name`, `canvas-invalid` |
+| warn | `missing-key`, `missing-visibility` (the page leaves the prompt out), `not-kebab`, `tag-count`, `alias-missing-title`, `use-case-long`, `bad-date`, `date-order`, `bad-version`, `history-missing`, `unlisted-variable` (`{{x}}`), `self-link`, `next-cycle`, `retired-referenced`, `stale-retest`, `duplicate-text`, `near-duplicate`, `tag-collision`, `index-missing`, `index-extra`, `index-stale`, `output-missing`, `output-stale`, `canvas-missing-file` |
+| info | `nonstandard-heading`, `link-mismatch`, `no-models-tested`, `private-in-repo`, `isolated`, `empty-category`, `log-missing` |
 
 ## Steps
 1. **Run the report.** Read it all. Summarise by severity, naming the notes. Lead with errors.

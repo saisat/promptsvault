@@ -9,6 +9,7 @@ tags:
   - anti-sycophancy
   - persona
 status: verified
+visibility: public
 models-tested: []
 source: own
 variables: []

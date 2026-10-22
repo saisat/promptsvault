@@ -9,6 +9,7 @@ tags:
   - artefacts
   - prompt-engineering
 status: needs-retest
+visibility: public
 models-tested: []
 source: own
 variables: []

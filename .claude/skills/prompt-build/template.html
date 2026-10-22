@@ -281,7 +281,7 @@ function card(p) {
 function render() {
   const list = DATA.prompts.filter(matches);
   $("#count").textContent = `${list.length} of ${DATA.prompts.length} prompts`;
-  $("#list").innerHTML = list.length ? list.map(card).join("") : `<p class="empty">${DATA.prompts.length ? "No prompts match." : "No prompts yet. Run prompt-ingest on tested prompts in curated/, then rebuild."}</p>`;
+  $("#list").innerHTML = list.length ? list.map(card).join("") : `<p class="empty">${DATA.prompts.length ? "No prompts match." : "No public prompts yet. Set visibility: public on a prompt note, then rebuild."}</p>`;
   renderFilters();
   openFromHash();
 }

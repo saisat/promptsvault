@@ -26,6 +26,8 @@ Read the output:
 Then tell the user the output path. Offer `open system/prompt-library.html` to view it.
 
 ## HTML reader
+**Only prompts with `visibility: public` are on the page, and it never shows version history.** A note with no `visibility`, or any other value, is treated as private: it is left out and `build.py` prints a warning. For public prompts, the `## version-history` section is dropped from the page data, so the page shows only the latest version and is much smaller. Links to non-public prompts are removed from public prompts' page data, so a hidden prompt's name cannot leak through a related list: list items in `## related` that point at one are dropped, other links to one read "a private prompt", and `related`/`next` lose them. `visibility` filters the page only. The notes stay in the Git repository, and `chains.canvas`, the Base, `prompt-find`, and `prompt-lint` still see every prompt.
+
 Self-contained (data embedded, no network). It has search (press `/`), category/status/tag filters, per-prompt copy buttons, optional placeholder fill-ins applied on copy, dark mode, and a phone layout where filters sit behind a Filters button. To change the look or the rendering, edit `template.html`; to change parsing, edit `build.py`.
 
 - **Private comments never reach the page.** `build.py` removes Obsidian `%%comments%%` (inline and block) before embedding the data, so they are absent from the page, its search index, and anything shared from it. Comments inside code fences are kept, because they belong to a prompt.
@@ -36,7 +38,7 @@ Self-contained (data embedded, no network). It has search (press `/`), category/
 ## Base (`system/library.base`)
 Created with the `obsidian-bases` skill. Load it before editing the file.
 - **Scope:** `file.inFolder("prompts")` and `type == "prompt"`, so `raw/` and `curated/` never appear.
-- **Views:** All prompts, By category (grouped), Needs retest (`status == "needs-retest"`), and Recently updated (sorted by `updated`, newest first, limit 10).
+- **Views:** All prompts, By category (grouped), Needs retest (`status == "needs-retest"`), Not public (`visibility != "public"`), and Recently updated (sorted by `updated`, newest first, limit 10).
 - Hyphenated property names (`models-tested`, `use-case`) work as plain names in `order`.
 
 ## Canvas (`system/chains.canvas`)

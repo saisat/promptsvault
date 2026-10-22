@@ -9,6 +9,7 @@ tags:
   - product-research
   - company-analysis
 status: verified
+visibility: public
 models-tested: []
 source: own
 variables:

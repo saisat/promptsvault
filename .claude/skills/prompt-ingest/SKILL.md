@@ -38,6 +38,7 @@ A source filename in `curated/`, several, or "all". With "all", process the sour
    - `tags`: 2–5 kebab-case tags. Reuse tags already seen in `prompts/`; scan the other notes' frontmatter to stay consistent.
    - `variables`: every `<placeholder>` or `{{variable}}` inside the prompt block, in order, no duplicates. XML-style wrapper tags that carry the input (e.g. `<industry>…</industry>`) are not placeholders; leave them out and explain in `## notes`.
    - `status`: keep if set, otherwise `verified` (sources in `curated/` have been tested).
+   - `visibility`: `public` or `private`. Keep the source's value if it has one. Otherwise set `public`, the user's default for new prompts. Only `public` prompts appear on the web page, and the value does not hide a note from the Git repository.
    - `models-tested`, `source`: keep if set. If unknown, leave `[]` / `own`. Do not invent. Move a source URL found in the file into `source`.
    - `use-case`: one line, written from the source's existing description. If there is none, draft one and flag it for review.
    - `related` / `next`: wikilinks to other notes in `prompts/` (and other sources being ingested in this run) that are clearly similar or that follow in a chain. Only link notes that exist or will exist after this run. Skip when unsure.
@@ -52,7 +53,7 @@ A source filename in `curated/`, several, or "all". With "all", process the sour
 Show a diff between the existing `prompts/` note and what the source would produce. Then, after approval:
 - **Prompt text changed:** move the old text into `## version-history` as `### v<old> (<today>, replaced by re-ingest)` in its own fenced block, set the new text, bump `version`, and set `updated`.
 - **Prompt text unchanged:** only merge new material from the source (extra notes, examples, test results, models).
-- **Always keep** existing notes, examples, `related`/`next` links, and version history. Don't overwrite anything the source doesn't mention.
+- **Always keep** existing notes, examples, `related`/`next` links, version history, and `visibility`. Don't overwrite anything the source doesn't mention.
 - `status` becomes `verified` again, since the source was tested.
 
 ## Verify before finishing
