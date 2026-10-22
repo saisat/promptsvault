@@ -11,7 +11,7 @@ tags:
   - system-prompt
   - interactive-prompt
 status: verified
-visibility: public
+visibility: private
 models-tested: []
 source: own
 variables: []

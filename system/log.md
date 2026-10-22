@@ -130,3 +130,6 @@ Rewrote with the asd-ste100 and structured profiles. Sentence-level edits only: 
 
 ## [2026-10-22] visibility | two prompts set to private
 The user set `visibility: private` on `create-fictionalized-caselet` and `linkedin-post-generator-lattice-framework`. They are now left off the web page (13 public prompts); the notes stay in the repository. Obsidian also re-saved the caselet's frontmatter without quotes.
+
+## [2026-10-22] visibility | the discovery prompt pair set to private
+The user set `visibility: private` on `ai-powered-discovery-analysis-synthesis-system-prompt` and `ai-powered-discovery-analysis-synthesis-user-prompt`. With the earlier two, four prompts are now left off the web page (11 public). The notes stay in the repository.
