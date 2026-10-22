@@ -94,3 +94,33 @@ Added `README.md` at the vault root: what the vault is, the raw → curated → 
 
 ## [2026-10-22] fix | source link cleaned before publishing
 Removed the share-tracking parameters (`utm_source`, `utm_medium`, `rcm`) from `source` in `market-research-analysis-with-ai.md`; the post link itself is unchanged. Page rebuilt.
+
+## [2026-10-22] ingest | costars-prompt-generator.md
+Source `curated/COSTARS Prompt Generator.md`. Prompt block copied exactly, including its 15 invisible U+FEFF characters. The example's `{{PRODUCT_IDEA}}` and `{{TARGET_CUSTOMER}}` are listed as variables (user's choice).
+
+## [2026-10-22] ingest | customer-interview-questions-generator.md
+Source `curated/Customer Interview Questions Generator.md`. Prompt block copied exactly. `{{USER_CONTEXT}}` and `{{INTERVIEW_OBJECTIVE}}` listed as variables.
+
+## [2026-10-22] ingest | grill-me.md
+Source `curated/grill-me.md`. Prompt block copied exactly. A longer standalone prompt, different from the `grill-me` Claude Code skill.
+
+## [2026-10-22] ingest | interactive-clarity-prompt.md
+Source `curated/Interactive Clarity Prompt.md`. Prompt block copied exactly. `[ROLE]` listed as a variable.
+
+## [2026-10-22] ingest | interactive-concept-note-generator.md
+Source `curated/Interactive Concept Note Generator.md`. Prompt block copied exactly. Written for the Institute of Product Leadership; the note says so.
+
+## [2026-10-22] ingest | pm-workflow-for-artefact.md
+Source `curated/PM Workflow for Artefact.md`. Prompt block copied exactly. The source description's typo ("Pa Product Manager") was tidied in `use-case` only.
+
+## [2026-10-22] cleanup | six curated sources moved to trash
+After the user confirmed, moved to Obsidian's trash (recoverable): `COSTARS Prompt Generator.md`, `Customer Interview Questions Generator.md`, `grill-me.md`, `Interactive Clarity Prompt.md`, `Interactive Concept Note Generator.md`, `PM Workflow for Artefact.md`. Each prompt block had been verified identical to its source before deletion.
+
+## [2026-10-22] rewrite | pm-workflow-for-artefact.md
+Rewrote with the asd-ste100 and structured profiles. Folded the Checklist and Instructions sections into Task, Input, and numbered Steps, merged Verbosity into Constraints, and left the worked example unchanged. v1 kept in version-history; status set to needs-retest.
+
+## [2026-10-22] rewrite | customer-interview-questions-generator.md
+Rewrote with the asd-ste100 and structured profiles. Kept `{{USER_CONTEXT}}`, `{{INTERVIEW_OBJECTIVE}}`, and the `<interview_script>` tags; moved the avoid-leading-questions rules into a Constraints section before the Steps. v1 kept in version-history; status set to needs-retest.
+
+## [2026-10-22] rewrite | grill-me.md
+Rewrote with the asd-ste100 and structured profiles. Sentence-level edits only: 182 of 211 lines unchanged; the final-summary headings, key questions, quoted phrases, and labels are unchanged. v1 kept in version-history; status set to needs-retest.
