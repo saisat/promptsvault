@@ -2,7 +2,7 @@
 
 Catalog of every prompt in `prompts/`, grouped by category. Maintained by `prompt-ingest`.
 
-Total: 15 prompts
+Total: 16 prompts
 
 ## market-research
 
@@ -33,3 +33,4 @@ Total: 15 prompts
 ## writing
 
 - [[linkedin-post-generator-lattice-framework]]: Interactive prompt that asks 12 questions, confirms the answers, then writes a LinkedIn post using the LATTICE framework.
+- [[ste-simplified-technical-english]]: Make the model write instructions and descriptions in ASD-STE100 Simplified Technical English.

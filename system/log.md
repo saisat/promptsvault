@@ -133,3 +133,6 @@ The user set `visibility: private` on `create-fictionalized-caselet` and `linked
 
 ## [2026-10-22] visibility | the discovery prompt pair set to private
 The user set `visibility: private` on `ai-powered-discovery-analysis-synthesis-system-prompt` and `ai-powered-discovery-analysis-synthesis-user-prompt`. With the earlier two, four prompts are now left off the web page (11 public). The notes stay in the repository.
+
+## [2026-10-30] ingest | ste-simplified-technical-english.md
+Ingested from `curated/STE - Simplified Technical English.md`. Added schema frontmatter (category `writing`, visibility `public`), prompt text unchanged. `use-case` and `when-to-use` drafted for review.
